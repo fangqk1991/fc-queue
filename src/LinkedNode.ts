@@ -1,4 +1,4 @@
-export default class LinkedNode {
+export class LinkedNode {
   public entity: any
   public next: any
 

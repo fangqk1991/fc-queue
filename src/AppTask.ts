@@ -1,4 +1,4 @@
-export default class AppTask {
+export class AppTask {
   private readonly _func: Function
   private readonly _params: any
   private _canceled: boolean

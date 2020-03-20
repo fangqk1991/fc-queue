@@ -1,7 +1,7 @@
-import AppTask from './AppTask'
-import AppQueue from './AppQueue'
+import { AppQueue } from './AppQueue'
+import { AppTask } from './AppTask'
 
-export default class AppTaskQueue {
+export class AppTaskQueue {
   private readonly _runningQueue: AppQueue
   private readonly _pendingQueue: AppQueue
   private readonly _failureQueue: AppQueue

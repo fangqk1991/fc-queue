@@ -1,6 +1,6 @@
-import LinkedNode from './LinkedNode'
+import { LinkedNode } from './LinkedNode'
 
-export default class AppQueue {
+export class AppQueue {
   private _head: LinkedNode | null
   private _tail: LinkedNode | null
   private _length: number

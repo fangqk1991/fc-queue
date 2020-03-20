@@ -37,8 +37,19 @@
     "ts-node": "^8.3.0",
     "typescript": "^3.5.2"
   },
+  "prettier": {
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "jsxBracketSameLine": false,
+    "jsxSingleQuote": true,
+    "printWidth": 120,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
   "files": [
-    "lib/*"
+    "lib/*",
+    "src/*"
   ],
   "nyc": {
     "sourceMap": false
