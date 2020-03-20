@@ -2,9 +2,9 @@ import { AppQueue } from './AppQueue'
 import { AppTask } from './AppTask'
 
 export class AppTaskQueue {
-  private readonly _runningQueue: AppQueue
-  private readonly _pendingQueue: AppQueue
-  private readonly _failureQueue: AppQueue
+  private readonly _runningQueue: AppQueue<AppTask>
+  private readonly _pendingQueue: AppQueue<AppTask>
+  private readonly _failureQueue: AppQueue<AppTask>
   private _maxConcurrent: number
   private _running: boolean
   private _processedCount: number
@@ -60,6 +60,13 @@ export class AppTaskQueue {
 
   public pause() {
     this._running = false
+  }
+
+  public async syncExecute() {
+    return new Promise((resolve: Function) => {
+      this.setOnEmptyCallback(resolve)
+      this.resume()
+    })
   }
 
   public _trigger() {

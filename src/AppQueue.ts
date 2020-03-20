@@ -1,8 +1,8 @@
 import { LinkedNode } from './LinkedNode'
 
-export class AppQueue {
-  private _head: LinkedNode | null
-  private _tail: LinkedNode | null
+export class AppQueue<T> {
+  private _head: LinkedNode<T> | null
+  private _tail: LinkedNode<T> | null
   private _length: number
 
   public constructor () {
@@ -15,7 +15,7 @@ export class AppQueue {
     return this._length
   }
 
-  public push(obj: any) {
+  public push(obj: T) {
     const node = new LinkedNode(obj)
 
     if (this.isEmpty()) {
@@ -44,7 +44,7 @@ export class AppQueue {
       this._head = this._head!.next
     }
 
-    return obj
+    return obj as T
   }
 
   public getFirst() {
