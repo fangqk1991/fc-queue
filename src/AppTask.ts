@@ -22,6 +22,7 @@ export class AppTask {
       await this._func(this._params)
       return true
     } catch (e) {
+      console.error(e)
       return false
     }
   }
