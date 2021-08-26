@@ -1,9 +1,9 @@
 export class AppTask {
-  private readonly _func: Function
+  private readonly _func: (args: any) => void | Promise<void>
   private readonly _params: any
   private _canceled: boolean
 
-  public constructor (func: Function, params: any = undefined) {
+  public constructor(func: (args: any) => void | Promise<void>, params: any = undefined) {
     this._func = func
     this._params = params
     this._canceled = false

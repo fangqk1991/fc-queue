@@ -9,9 +9,10 @@ export class AppTaskQueue {
   private _running: boolean
   private _processedCount: number
   private _pendingLimit: number
-  private _emptyCallback?: Function
+  private _emptyCallback?: () => void | Promise<void>
+  public autoPauseWhenRunningQueueEmpty: boolean
 
-  public constructor () {
+  public constructor() {
     this._runningQueue = new AppQueue()
     this._pendingQueue = new AppQueue()
     this._failureQueue = new AppQueue()
@@ -19,6 +20,7 @@ export class AppTaskQueue {
     this._running = false
     this._processedCount = 0
     this._pendingLimit = -1
+    this.autoPauseWhenRunningQueueEmpty = false
   }
 
   public setMaxConcurrent(count: number) {
@@ -40,7 +42,10 @@ export class AppTaskQueue {
   }
 
   public checkFullLoad() {
-    return this._pendingLimit >= 0 && this._pendingQueue.size() + this._runningQueue.size() >= this._maxConcurrent + this._pendingLimit
+    return (
+      this._pendingLimit >= 0 &&
+      this._pendingQueue.size() + this._runningQueue.size() >= this._maxConcurrent + this._pendingLimit
+    )
   }
 
   public addTask(task: AppTask) {
@@ -63,7 +68,7 @@ export class AppTaskQueue {
   }
 
   public async syncExecute() {
-    return new Promise((resolve: Function) => {
+    return new Promise((resolve: () => void | Promise<void>) => {
       this.setOnEmptyCallback(resolve)
       this.resume()
     })
@@ -92,12 +97,14 @@ export class AppTaskQueue {
     }
 
     if (this._runningQueue.size() === 0) {
-      this.pause()
+      if (this.autoPauseWhenRunningQueueEmpty) {
+        this.pause()
+      }
       this._emptyCallback && this._emptyCallback()
     }
   }
 
-  public setOnEmptyCallback(callback: Function) {
+  public setOnEmptyCallback(callback: () => void | Promise<void>) {
     this._emptyCallback = callback
   }
 
