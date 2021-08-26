@@ -92,6 +92,7 @@ export class AppTaskQueue {
     }
 
     if (this._runningQueue.size() === 0) {
+      this.pause()
       this._emptyCallback && this._emptyCallback()
     }
   }
